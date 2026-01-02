@@ -5,8 +5,8 @@ const nextConfig: NextConfig = {
   images: {
     unoptimized: true,
   },
-  basePath: '/nextjs-shadcn-template',
-  assetPrefix: '/nextjs-shadcn-template',
+  basePath: '/github-compare',
+  assetPrefix: '/github-compare',
 };
 
 export default nextConfig;
