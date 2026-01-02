@@ -1,15 +1,13 @@
-import localforage from 'localforage';
+import * as localforage from 'localforage';
 
 import { clearAllData, getData, setData } from './index';
 
 jest.mock('localforage', () => ({
-  default: {
-    createInstance: jest.fn(() => ({
-      getItem: jest.fn(),
-      setItem: jest.fn(),
-      removeItem: jest.fn(),
-    })),
-  },
+  createInstance: jest.fn(() => ({
+    getItem: jest.fn(),
+    setItem: jest.fn(),
+    removeItem: jest.fn(),
+  })),
 }));
 
 describe('storage', () => {
