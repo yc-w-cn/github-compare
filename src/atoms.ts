@@ -19,3 +19,5 @@ export type SortOrder = 'asc' | 'desc';
 
 export const sortFieldAtom = atom<SortField>('stars');
 export const sortOrderAtom = atom<SortOrder>('desc');
+
+export const editModeAtom = atom(false);
