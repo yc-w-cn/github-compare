@@ -64,9 +64,8 @@ export function RepoRow({
           href={value}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex items-center gap-1 text-blue-600 dark:text-blue-400 hover:underline"
+          className="text-zinc-900 dark:text-zinc-100 hover:underline"
         >
-          <ExternalLink className="w-3 h-3" />
           {value}
         </a>
       );
@@ -79,9 +78,8 @@ export function RepoRow({
           href={`https://arxiv.org/abs/${arxivId}`}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex items-center gap-1 text-blue-600 dark:text-blue-400 hover:underline"
+          className="text-zinc-900 dark:text-zinc-100 hover:underline"
         >
-          <FileText className="w-3 h-3" />
           {arxivId}
         </a>
       );
