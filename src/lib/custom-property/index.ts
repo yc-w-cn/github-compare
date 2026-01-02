@@ -13,7 +13,7 @@ export async function addProperty(
   type: CustomPropertyType,
 ): Promise<CustomProperty> {
   const data = await getData();
-  const maxOrder = data.properties.reduce(
+  const maxOrder: number = data.properties.reduce(
     (max, p) => Math.max(max, p.order),
     -1,
   );
