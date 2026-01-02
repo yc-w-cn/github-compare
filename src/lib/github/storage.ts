@@ -1,9 +1,10 @@
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'fs';
 import { join } from 'path';
-import type { GitHubRepo, DataIndex } from './types';
 
-const DATA_DIR = join(process.cwd(), 'src', 'public', 'data');
-const INDEX_FILE = join(DATA_DIR, 'data.json');
+import type { DataIndex, GitHubRepo } from './types';
+
+const DATA_DIR = join(process.cwd(), 'public', 'data');
+const INDEX_FILE = join(DATA_DIR, 'meta.json');
 
 export function ensureDataDir(): void {
   if (!existsSync(DATA_DIR)) {
