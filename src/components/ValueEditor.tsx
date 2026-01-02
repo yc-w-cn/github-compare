@@ -50,7 +50,7 @@ export function ValueEditor({ repo }: ValueEditorProps) {
           href={value}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex items-center gap-1 text-blue-600 dark:text-blue-400 hover:underline"
+          className="flex items-center gap-1 text-zinc-900 dark:text-zinc-100 hover:underline cursor-pointer"
         >
           <ExternalLink className="w-3 h-3" />
           {value}
@@ -65,7 +65,7 @@ export function ValueEditor({ repo }: ValueEditorProps) {
           href={`https://arxiv.org/abs/${arxivId}`}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex items-center gap-1 text-blue-600 dark:text-blue-400 hover:underline"
+          className="flex items-center gap-1 text-zinc-900 dark:text-zinc-100 hover:underline cursor-pointer"
         >
           <FileText className="w-3 h-3" />
           {arxivId}
@@ -81,7 +81,7 @@ export function ValueEditor({ repo }: ValueEditorProps) {
       {properties.map((property) => (
         <div
           key={property.id}
-          className="flex items-start gap-3 p-3 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-lg"
+          className="flex items-start gap-3 p-4 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800"
         >
           <div className="flex-1 min-w-0">
             <div className="text-sm font-medium text-zinc-900 dark:text-zinc-100 mb-1">
@@ -102,11 +102,11 @@ export function ValueEditor({ repo }: ValueEditorProps) {
                         ? 'https://arxiv.org/abs/...'
                         : '输入值'
                   }
-                  className="flex-1 px-2 py-1 border border-zinc-300 dark:border-zinc-700 rounded bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 text-sm"
+                  className="flex-1 px-2 py-1 border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 text-sm"
                 />
                 <button
                   onClick={() => handleSave(property.id)}
-                  className="px-3 py-1 bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-900 rounded text-sm hover:bg-zinc-700 dark:hover:bg-zinc-300"
+                  className="px-4 py-1 bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-900 text-sm font-medium transition-all hover:bg-zinc-700 dark:hover:bg-zinc-300 cursor-pointer"
                 >
                   保存
                 </button>
@@ -114,7 +114,7 @@ export function ValueEditor({ repo }: ValueEditorProps) {
                   onClick={() => {
                     setEditing({ ...editing, [property.id]: false });
                   }}
-                  className="px-3 py-1 bg-zinc-200 dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 rounded text-sm hover:bg-zinc-300 dark:hover:bg-zinc-700"
+                  className="px-4 py-1 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 text-sm font-medium border border-zinc-300 dark:border-zinc-700 transition-all hover:bg-zinc-50 dark:hover:bg-zinc-700 cursor-pointer"
                 >
                   取消
                 </button>
@@ -130,7 +130,7 @@ export function ValueEditor({ repo }: ValueEditorProps) {
               onClick={() => {
                 setEditing({ ...editing, [property.id]: true });
               }}
-              className="px-3 py-1 text-sm text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded transition-colors"
+              className="px-3 py-1 text-sm text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors cursor-pointer"
             >
               编辑
             </button>
