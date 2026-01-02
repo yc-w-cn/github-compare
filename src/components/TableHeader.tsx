@@ -2,20 +2,19 @@
 
 import { ReactNode } from 'react';
 
+import { useSort } from '@/hooks/use-sort';
+
+import type { SortField } from '@/atoms';
+
 interface TableHeaderProps {
   children: ReactNode;
-  field?: string;
-  handleSort?: (field: string) => void;
-  renderSortIcon?: (field: string) => ReactNode;
+  field?: SortField;
 }
 
-export function TableHeader({
-  children,
-  field,
-  handleSort,
-  renderSortIcon,
-}: TableHeaderProps) {
-  const isSortable = field && handleSort && renderSortIcon;
+export function TableHeader({ children, field }: TableHeaderProps) {
+  const { handleSort, renderSortIcon } = useSort();
+
+  const isSortable = !!field;
 
   return (
     <th

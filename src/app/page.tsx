@@ -8,6 +8,7 @@ import { HeaderActions } from '@/components/HeaderActions';
 import { ImportExportManager } from '@/components/ImportExportManager';
 import { PropertyEditorManager } from '@/components/PropertyEditorManager';
 import { RepoRow } from '@/components/RepoRow';
+import { TableHeader } from '@/components/TableHeader';
 import { ValueEditorManager } from '@/components/ValueEditorManager';
 import { useCustomProperties } from '@/hooks/use-custom-properties';
 import { useRepos } from '@/hooks/use-github-repos';
@@ -19,7 +20,7 @@ export default function Home() {
   const { data: repos = [] } = useRepos();
   const setRepos = useSetAtom(reposAtom);
   const { data: customData } = useCustomProperties(repos);
-  const { sortedRepos, handleSort, renderSortIcon } = useSortedRepos(repos);
+  const { sortedRepos } = useSortedRepos(repos);
 
   useEffect(() => {
     setRepos(repos);
@@ -49,59 +50,17 @@ export default function Home() {
             <table className="w-full border-collapse">
               <thead>
                 <tr className="border-b-2 border-zinc-900 dark:border-zinc-100">
-                  <th className="py-4 px-4 text-left text-sm font-semibold text-zinc-900 dark:text-zinc-100 tracking-wide">
-                    仓库
-                  </th>
-                  <th
-                    className="py-4 px-4 text-center text-sm font-semibold text-zinc-900 dark:text-zinc-100 tracking-wide cursor-pointer hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
-                    onClick={() => {
-                      handleSort('stars');
-                    }}
-                  >
-                    Stars{renderSortIcon('stars')}
-                  </th>
-                  <th
-                    className="py-4 px-4 text-center text-sm font-semibold text-zinc-900 dark:text-zinc-100 tracking-wide cursor-pointer hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
-                    onClick={() => {
-                      handleSort('forks');
-                    }}
-                  >
-                    Forks{renderSortIcon('forks')}
-                  </th>
-                  <th
-                    className="py-4 px-4 text-center text-sm font-semibold text-zinc-900 dark:text-zinc-100 tracking-wide cursor-pointer hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
-                    onClick={() => {
-                      handleSort('issues');
-                    }}
-                  >
-                    Issues{renderSortIcon('issues')}
-                  </th>
-                  <th className="py-4 px-4 text-center text-sm font-semibold text-zinc-900 dark:text-zinc-100 tracking-wide">
-                    语言
-                  </th>
-                  <th
-                    className="py-4 px-4 text-center text-sm font-semibold text-zinc-900 dark:text-zinc-100 tracking-wide cursor-pointer hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
-                    onClick={() => {
-                      handleSort('size');
-                    }}
-                  >
-                    大小{renderSortIcon('size')}
-                  </th>
-                  <th
-                    className="py-4 px-4 text-center text-sm font-semibold text-zinc-900 dark:text-zinc-100 tracking-wide cursor-pointer hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
-                    onClick={() => {
-                      handleSort('updated_at');
-                    }}
-                  >
-                    更新时间{renderSortIcon('updated_at')}
-                  </th>
+                  <TableHeader>仓库</TableHeader>
+                  <TableHeader field="stars">Stars</TableHeader>
+                  <TableHeader field="forks">Forks</TableHeader>
+                  <TableHeader field="issues">Issues</TableHeader>
+                  <TableHeader>语言</TableHeader>
+                  <TableHeader field="size">大小</TableHeader>
+                  <TableHeader field="updated_at">更新时间</TableHeader>
                   {customProperties.map((property) => (
-                    <th
-                      key={property.id}
-                      className="py-4 px-4 text-center text-sm font-semibold text-zinc-900 dark:text-zinc-100 tracking-wide"
-                    >
+                    <TableHeader key={property.id}>
                       {property.displayName}
-                    </th>
+                    </TableHeader>
                   ))}
                 </tr>
               </thead>
