@@ -166,15 +166,15 @@ export function ImportExportPanel({
         </h4>
         <div className="grid grid-cols-3 gap-3 text-sm text-zinc-600 dark:text-zinc-400">
           <div className="flex items-start gap-2">
-            <div className="w-1.5 h-1.5 rounded-full bg-zinc-400 dark:bg-zinc-600 mt-1.5 flex-shrink-0" />
+            <div className="w-1.5 h-1.5 rounded-full bg-zinc-400 dark:bg-zinc-600 mt-1.5 shrink-0" />
             <span>仓库元信息</span>
           </div>
           <div className="flex items-start gap-2">
-            <div className="w-1.5 h-1.5 rounded-full bg-zinc-400 dark:bg-zinc-600 mt-1.5 flex-shrink-0" />
+            <div className="w-1.5 h-1.5 rounded-full bg-zinc-400 dark:bg-zinc-600 mt-1.5 shrink-0" />
             <span>自定义属性定义</span>
           </div>
           <div className="flex items-start gap-2">
-            <div className="w-1.5 h-1.5 rounded-full bg-zinc-400 dark:bg-zinc-600 mt-1.5 flex-shrink-0" />
+            <div className="w-1.5 h-1.5 rounded-full bg-zinc-400 dark:bg-zinc-600 mt-1.5 shrink-0" />
             <span>仓库自定义值</span>
           </div>
         </div>
