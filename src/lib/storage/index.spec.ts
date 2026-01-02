@@ -1,25 +1,18 @@
 import * as localforage from 'localforage';
 
-import { clearAllData, getData, setData } from './index';
+const mockStore = {
+  getItem: jest.fn(),
+  setItem: jest.fn(),
+  removeItem: jest.fn(),
+};
 
 jest.mock('localforage', () => ({
-  createInstance: jest.fn(() => ({
-    getItem: jest.fn(),
-    setItem: jest.fn(),
-    removeItem: jest.fn(),
-  })),
+  createInstance: jest.fn(() => mockStore),
 }));
 
 describe('storage', () => {
-  let mockStore: any;
-
   beforeEach(() => {
-    mockStore = {
-      getItem: jest.fn(),
-      setItem: jest.fn(),
-      removeItem: jest.fn(),
-    };
-    (localforage.createInstance as jest.Mock).mockReturnValue(mockStore);
+    jest.clearAllMocks();
   });
 
   afterEach(() => {
@@ -36,6 +29,7 @@ describe('storage', () => {
       };
       mockStore.getItem.mockResolvedValue(mockData);
 
+      const { getData } = require('./index');
       const result = await getData();
 
       expect(result).toEqual(mockData);
@@ -44,6 +38,7 @@ describe('storage', () => {
     it('应该返回默认数据当没有存储数据', async () => {
       mockStore.getItem.mockResolvedValue(null);
 
+      const { getData } = require('./index');
       const result = await getData();
 
       expect(result).toEqual({ properties: [], values: [] });
@@ -55,6 +50,7 @@ describe('storage', () => {
       const mockData = { properties: [], values: [] };
       mockStore.setItem.mockResolvedValue(undefined);
 
+      const { setData } = require('./index');
       await setData(mockData);
 
       expect(mockStore.setItem).toHaveBeenCalledWith(
@@ -68,6 +64,7 @@ describe('storage', () => {
     it('应该清除所有数据', async () => {
       mockStore.removeItem.mockResolvedValue(undefined);
 
+      const { clearAllData } = require('./index');
       await clearAllData();
 
       expect(mockStore.removeItem).toHaveBeenCalledWith('custom-compare-data');

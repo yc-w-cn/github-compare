@@ -7,27 +7,29 @@ jest.mock('path', () => ({
 
 describe('ensureDataDir', () => {
   it('应该在目录不存在时创建目录', () => {
-    const { existsSync, mkdirSync } = require('fs');
-    existsSync.mockReturnValue(false);
-    mkdirSync.mockImplementation(() => {});
+    jest.isolateModules(() => {
+      const { existsSync, mkdirSync } = require('fs');
+      existsSync.mockReturnValue(false);
 
-    const { ensureDataDir } = require('./storage');
-    ensureDataDir();
+      const { ensureDataDir } = require('./storage');
+      ensureDataDir();
 
-    expect(mkdirSync).toHaveBeenCalledWith(expect.any(String), {
-      recursive: true,
+      expect(mkdirSync).toHaveBeenCalledWith(expect.any(String), {
+        recursive: true,
+      });
     });
   });
 
   it('应该在目录存在时不创建目录', () => {
-    const { existsSync, mkdirSync } = require('fs');
-    existsSync.mockReturnValue(true);
-    mkdirSync.mockImplementation(() => {});
+    jest.isolateModules(() => {
+      const { existsSync, mkdirSync } = require('fs');
+      existsSync.mockReturnValue(true);
 
-    const { ensureDataDir } = require('./storage');
-    ensureDataDir();
+      const { ensureDataDir } = require('./storage');
+      ensureDataDir();
 
-    expect(mkdirSync).not.toHaveBeenCalled();
+      expect(mkdirSync).not.toHaveBeenCalled();
+    });
   });
 });
 
@@ -81,11 +83,12 @@ describe('updateIndex', () => {
     const { updateIndex } = require('./storage');
     updateIndex('test-owner/test-repo');
 
-    expect(writeFileSync).toHaveBeenCalledWith(
-      expect.any(String),
-      expect.stringContaining('"repos": ["test-owner/test-repo"]'),
-      'utf-8',
-    );
+    const lastCall =
+      writeFileSync.mock.calls[writeFileSync.mock.calls.length - 1];
+    expect(lastCall[0]).toContain('data.json');
+    const data = JSON.parse(lastCall[1]);
+    expect(data.repos).toEqual(['test-owner/test-repo']);
+    expect(lastCall[2]).toBe('utf-8');
   });
 
   it('应该更新现有索引文件', () => {
@@ -102,13 +105,12 @@ describe('updateIndex', () => {
     const { updateIndex } = require('./storage');
     updateIndex('test-owner/test-repo');
 
-    expect(writeFileSync).toHaveBeenCalledWith(
-      expect.any(String),
-      expect.stringContaining(
-        '"repos": ["existing/repo", "test-owner/test-repo"]',
-      ),
-      'utf-8',
-    );
+    const lastCall =
+      writeFileSync.mock.calls[writeFileSync.mock.calls.length - 1];
+    expect(lastCall[0]).toContain('data.json');
+    const data = JSON.parse(lastCall[1]);
+    expect(data.repos).toEqual(['existing/repo', 'test-owner/test-repo']);
+    expect(lastCall[2]).toBe('utf-8');
   });
 
   it('应该避免重复添加相同的仓库', () => {
@@ -125,10 +127,11 @@ describe('updateIndex', () => {
     const { updateIndex } = require('./storage');
     updateIndex('test-owner/test-repo');
 
-    expect(writeFileSync).toHaveBeenCalledWith(
-      expect.any(String),
-      expect.stringContaining('"repos": ["test-owner/test-repo"]'),
-      'utf-8',
-    );
+    const lastCall =
+      writeFileSync.mock.calls[writeFileSync.mock.calls.length - 1];
+    expect(lastCall[0]).toContain('data.json');
+    const data = JSON.parse(lastCall[1]);
+    expect(data.repos).toEqual(['test-owner/test-repo']);
+    expect(lastCall[2]).toBe('utf-8');
   });
 });
