@@ -1,36 +1,36 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# GitHub 仓库对比工具
 
-## Getting Started
+一个简洁高效的 GitHub 仓库对比工具，帮助你快速了解和比较不同仓库的关键指标。
 
-First, run the development server:
+## 功能特性
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+### 多仓库对比
+- 支持同时对比多个 GitHub 仓库
+- 一目了然地查看各仓库的核心数据
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 关键指标展示
+- **Stars** - 仓库获得的星标数量
+- **Forks** - 仓库的复刻数量
+- **Issues** - 开放的议题数量
+- **语言** - 主要编程语言
+- **大小** - 仓库代码大小
+- **更新时间** - 最后更新日期
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 界面设计
+- 简洁清晰的表格布局
+- 支持深色模式
+- 响应式设计，适配各种屏幕尺寸
+- 数据格式化显示（大数字使用 K/M 单位）
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 数据展示
+- 实时显示最后更新时间
+- 仓库描述信息
+- 点击仓库名称可直接跳转到 GitHub
 
-## Learn More
+## 使用方式
 
-To learn more about Next.js, take a look at the following resources:
+访问网站即可查看已配置的 GitHub 仓库对比信息。所有数据通过 GitHub API 获取并实时展示。
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 开源协议
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+本项目采用 [MIT 协议](LICENSE) 开源。
