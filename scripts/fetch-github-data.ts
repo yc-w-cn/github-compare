@@ -41,7 +41,7 @@ main()
   })
   .catch((error: unknown) => {
     console.error(
-      `❌ 错误: ${error instanceof Error ? error.message : String(error)}`,
+      `错误: ${error instanceof Error ? error.message : String(error)}`,
     );
     process.exit(1);
   });
