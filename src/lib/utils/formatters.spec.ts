@@ -1,8 +1,4 @@
-import {
-  formatNumber,
-  formatDate,
-  formatSize,
-} from './formatters';
+import { formatDate, formatNumber, formatSize } from './formatters';
 
 describe('formatters', () => {
   describe('formatNumber', () => {
