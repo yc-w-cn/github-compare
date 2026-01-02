@@ -19,7 +19,7 @@ export function HeaderActions() {
   const setImportExportOpen = useSetAtom(importExportManagerOpenAtom);
 
   return (
-    <div className="fixed top-0 right-0 p-6 z-10 flex gap-1">
+    <div className="p-6 z-10 flex gap-1">
       <IconButton
         icon={<Database className="w-6 h-6" />}
         title="导入导出"
