@@ -8,11 +8,12 @@ import {
   addProperty,
   deleteProperty,
   getProperties,
-  reorderProperties,
   updateProperty,
-} from '@/lib/custom-compare';
-
-import type { CustomProperty, CustomPropertyType } from '@/types';
+} from '@/lib/custom-property';
+import {
+  CustomProperty,
+  CustomPropertyType,
+} from '@/lib/custom-property/types';
 
 export function PropertyEditor() {
   const [properties, setProperties] = useState<CustomProperty[]>([]);
@@ -25,7 +26,7 @@ export function PropertyEditor() {
   });
 
   useEffect(() => {
-    loadProperties();
+    void loadProperties();
   }, []);
 
   async function loadProperties() {
@@ -38,7 +39,7 @@ export function PropertyEditor() {
     await addProperty(formData.displayName, formData.slug, formData.type);
     setFormData({ displayName: '', slug: '', type: 'text' });
     setShowAddForm(false);
-    loadProperties();
+    await loadProperties();
   }
 
   async function handleUpdate(id: string) {
@@ -50,13 +51,13 @@ export function PropertyEditor() {
     });
     setEditingId(null);
     setFormData({ displayName: '', slug: '', type: 'text' });
-    loadProperties();
+    await loadProperties();
   }
 
   async function handleDelete(id: string) {
     if (confirm('确定要删除这个属性吗？')) {
       await deleteProperty(id);
-      loadProperties();
+      await loadProperties();
     }
   }
 
