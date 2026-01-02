@@ -5,3 +5,4 @@
 5. 不允许：使用emoji
 6. 设计规范：docs/SWISS_DESIGN_STYLE.md
 7. 单元测试规范：docs/UNIT_TESTING_GUIDE.md
+8. Nextjs：不允许使用服务器端功能以支持全站静态导出
