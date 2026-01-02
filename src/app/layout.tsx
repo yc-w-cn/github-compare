@@ -68,11 +68,11 @@ export const metadata: Metadata = {
     maximumScale: 5,
   },
   icons: {
-    icon: '/favicon.ico',
-    shortcut: '/favicon-16x16.png',
-    apple: '/apple-touch-icon.png',
+    icon: '/github-compare/favicon.ico',
+    shortcut: '/github-compare/favicon-16x16.png',
+    apple: '/github-compare/apple-touch-icon.png',
   },
-  manifest: '/site.webmanifest',
+  manifest: '/github-compare/site.webmanifest',
 };
 
 export default function RootLayout({
