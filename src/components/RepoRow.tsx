@@ -96,7 +96,7 @@ export function RepoRow({
           onClick={() => {
             handleStartEdit(property.id);
           }}
-          className="px-3 py-1 text-xs text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-colors cursor-pointer border border-blue-300 dark:border-blue-700 rounded"
+          className="px-3 py-1 text-xs text-zinc-900 dark:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors cursor-pointer border border-zinc-500 dark:border-zinc-700"
         >
           编辑
         </button>
