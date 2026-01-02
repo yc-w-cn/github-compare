@@ -70,6 +70,7 @@ export default defineConfig(
             '*.js',
             'eslint.config.mjs',
             'postcss.config.mjs',
+            'prettier.config.mjs',
           ],
         },
         tsconfigRootDir: import.meta.dirname,
