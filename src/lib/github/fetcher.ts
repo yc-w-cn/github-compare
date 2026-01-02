@@ -1,4 +1,5 @@
 import { config } from 'dotenv';
+
 import type { GitHubRepo } from './types';
 
 config();
