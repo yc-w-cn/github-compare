@@ -1,5 +1,6 @@
 import { atom } from 'jotai';
 
+import type { CustomProperty } from '@/lib/custom-property/types';
 import type { GitHubRepo } from '@/lib/github/types';
 
 export const reposAtom = atom<GitHubRepo[]>([]);
@@ -7,6 +8,12 @@ export const reposAtom = atom<GitHubRepo[]>([]);
 export const customCompareManagerOpenAtom = atom(false);
 
 export const valueEditorOpenAtom = atom(false);
+
+export const valueEditorRepoAtom = atom<GitHubRepo | null>(null);
+
+export const valueEditorPropertyAtom = atom<CustomProperty | null>(null);
+
+export const valueEditorValueAtom = atom<string>('');
 
 export const importExportManagerOpenAtom = atom(false);
 
