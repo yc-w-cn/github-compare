@@ -1,19 +1,29 @@
 'use client';
 
-import { useState, useRef } from 'react';
-import { Download, Upload, Trash2 } from 'lucide-react';
-import type { GitHubRepo, ExportData } from '@/types';
-import { exportData, importData, clearAllData } from '@/lib/custom-compare';
+import { useRef, useState } from 'react';
+
+import { Download, Trash2, Upload } from 'lucide-react';
+
+import { GitHubRepo } from '@/lib/github/types';
+import { exportData, importData } from '@/lib/import-export';
+import type { ExportData } from '@/lib/import-export/types';
+import { clearAllData } from '@/lib/storage';
 
 interface ImportExportPanelProps {
   repos: GitHubRepo[];
   onDataImported?: () => void;
 }
 
-export function ImportExportPanel({ repos, onDataImported }: ImportExportPanelProps) {
+export function ImportExportPanel({
+  repos,
+  onDataImported,
+}: ImportExportPanelProps) {
   const [isExporting, setIsExporting] = useState(false);
   const [isImporting, setIsImporting] = useState(false);
-  const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
+  const [message, setMessage] = useState<{
+    type: 'success' | 'error';
+    text: string;
+  } | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   async function handleExport() {
@@ -32,10 +42,14 @@ export function ImportExportPanel({ repos, onDataImported }: ImportExportPanelPr
       document.body.removeChild(a);
       URL.revokeObjectURL(url);
       setMessage({ type: 'success', text: '导出成功' });
-      setTimeout(() => setMessage(null), 3000);
+      setTimeout(() => {
+        setMessage(null);
+      }, 3000);
     } catch (error) {
       setMessage({ type: 'error', text: '导出失败' });
-      setTimeout(() => setMessage(null), 3000);
+      setTimeout(() => {
+        setMessage(null);
+      }, 3000);
     } finally {
       setIsExporting(false);
     }
@@ -50,7 +64,7 @@ export function ImportExportPanel({ repos, onDataImported }: ImportExportPanelPr
       const text = await file.text();
       const data = JSON.parse(text) as ExportData;
 
-      if (!data.version || !data.customData) {
+      if (!data.customData) {
         throw new Error('无效的文件格式');
       }
 
@@ -59,11 +73,15 @@ export function ImportExportPanel({ repos, onDataImported }: ImportExportPanelPr
         type: 'success',
         text: `导入成功：${result.propertiesCount} 个属性，${result.valuesCount} 个值`,
       });
-      setTimeout(() => setMessage(null), 3000);
+      setTimeout(() => {
+        setMessage(null);
+      }, 3000);
       onDataImported?.();
     } catch (error) {
       setMessage({ type: 'error', text: '导入失败：文件格式错误' });
-      setTimeout(() => setMessage(null), 3000);
+      setTimeout(() => {
+        setMessage(null);
+      }, 3000);
     } finally {
       setIsImporting(false);
       if (fileInputRef.current) {
@@ -77,11 +95,15 @@ export function ImportExportPanel({ repos, onDataImported }: ImportExportPanelPr
       try {
         await clearAllData();
         setMessage({ type: 'success', text: '数据已清空' });
-        setTimeout(() => setMessage(null), 3000);
+        setTimeout(() => {
+          setMessage(null);
+        }, 3000);
         onDataImported?.();
       } catch (error) {
         setMessage({ type: 'error', text: '清空失败' });
-        setTimeout(() => setMessage(null), 3000);
+        setTimeout(() => {
+          setMessage(null);
+        }, 3000);
       }
     }
   }
