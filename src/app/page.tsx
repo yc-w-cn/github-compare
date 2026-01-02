@@ -4,13 +4,14 @@ import { EmptyState } from '@/components/EmptyState';
 import { Footer } from '@/components/Footer';
 import { HeaderActions } from '@/components/HeaderActions';
 import { ImportExportManager } from '@/components/ImportExportManager';
+import { Loading } from '@/components/Loading';
 import { PropertyEditorManager } from '@/components/PropertyEditorManager';
 import { RepoTable } from '@/components/RepoTable';
 import { ValueEditorManager } from '@/components/ValueEditorManager';
 import { useRepos } from '@/hooks/use-github-repos';
 
 export default function Home() {
-  const { data: repos = [] } = useRepos();
+  const { data: repos = [], isLoading } = useRepos();
 
   return (
     <div className="min-h-screen bg-white dark:bg-zinc-950 flex flex-col relative">
@@ -22,7 +23,9 @@ export default function Home() {
       </header>
       <div className="flex-1 w-full py-12 flex flex-col">
         <div className="w-full flex-1 flex items-center justify-center">
-          {repos.length > 0 ? (
+          {isLoading ? (
+            <Loading />
+          ) : repos.length > 0 ? (
             <RepoTable data={repos} />
           ) : (
             <div className="w-full max-w-4xl mx-auto">
