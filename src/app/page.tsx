@@ -4,9 +4,7 @@ import { join } from 'path';
 import { CustomCompareManager } from '@/components/CustomCompareManager';
 import { Footer } from '@/components/Footer';
 import { RepoRow } from '@/components/RepoRow';
-import { toDisplayData } from '@/lib/formatters';
-
-import type { GitHubRepo } from '@/types';
+import type { GitHubRepo } from '@/lib/github/types';
 
 export default function Home() {
   const dataPath = join(process.cwd(), 'src', 'public', 'data', 'data.json');
@@ -21,8 +19,6 @@ export default function Home() {
     const repoData = JSON.parse(readFileSync(repoPath, 'utf-8'));
     repos.push(repoData);
   }
-
-  const displayRepos = repos.map(toDisplayData);
 
   return (
     <div className="min-h-screen bg-white dark:bg-zinc-950">
@@ -64,14 +60,14 @@ export default function Home() {
               </tr>
             </thead>
             <tbody>
-              {displayRepos.map((repo) => (
-                <RepoRow key={repo.fullName} repo={repo} />
+              {repos.map((repo) => (
+                <RepoRow key={repo.full_name} repo={repo} />
               ))}
             </tbody>
           </table>
         </div>
 
-        {displayRepos.length === 0 && (
+        {repos.length === 0 && (
           <div className="text-center py-16">
             <p className="text-zinc-600 dark:text-zinc-400 text-lg">
               暂无数据，请使用脚本获取 GitHub 仓库信息
@@ -85,7 +81,7 @@ export default function Home() {
         <Footer />
       </div>
 
-      <CustomCompareManager repos={displayRepos} rawRepos={repos} />
+      <CustomCompareManager repos={repos} rawRepos={repos} />
     </div>
   );
 }
