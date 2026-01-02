@@ -3,3 +3,5 @@
 3. 代码文件：不要超过100行，否则需要合理抽象
 4. 添加 shadcn 组件的方式：pnpm dlx shadcn@latest add button
 5. 不允许：使用emoji
+6. 设计规范：docs/SWISS_DESIGN_STYLE.md
+7. 单元测试规范：docs/UNIT_TESTING_GUIDE.md
