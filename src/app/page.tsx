@@ -6,7 +6,6 @@ import { HeaderActions } from '@/components/HeaderActions';
 import { ImportExportManager } from '@/components/ImportExportManager';
 import { PropertyEditorManager } from '@/components/PropertyEditorManager';
 import { RepoTable } from '@/components/RepoTable';
-import { ValueEditorManager } from '@/components/ValueEditorManager';
 import { useRepos } from '@/hooks/use-github-repos';
 
 export default function Home() {
@@ -30,7 +29,6 @@ export default function Home() {
       <Footer />
 
       <PropertyEditorManager />
-      <ValueEditorManager />
       <ImportExportManager />
     </div>
   );
