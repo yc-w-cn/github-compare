@@ -8,6 +8,7 @@ import { GitHubRepo } from '@/lib/github/types';
 import { exportData, importData } from '@/lib/import-export';
 import type { ExportData } from '@/lib/import-export/types';
 import { clearAllData } from '@/lib/storage';
+import { cn } from '@/lib/utils';
 
 interface ImportExportPanelProps {
   repos: GitHubRepo[];
@@ -109,28 +110,25 @@ export function ImportExportPanel({
   }
 
   return (
-    <div className="space-y-4">
-      <h3 className="text-lg font-semibold text-zinc-900 dark:text-zinc-100">
-        导入导出
-      </h3>
-
+    <div className="space-y-6">
       {message && (
         <div
-          className={`p-3 rounded-lg ${
+          className={cn(
+            'p-4 border-l-4',
             message.type === 'success'
-              ? 'bg-green-50 dark:bg-green-900/20 text-green-900 dark:text-green-300'
-              : 'bg-red-50 dark:bg-red-900/20 text-red-900 dark:text-red-300'
-          }`}
+              ? 'bg-zinc-50 dark:bg-zinc-900/30 border-green-900 dark:border-green-400 text-zinc-900 dark:text-zinc-100'
+              : 'bg-zinc-50 dark:bg-zinc-900/30 border-red-900 dark:border-red-400 text-zinc-900 dark:text-zinc-100',
+          )}
         >
           {message.text}
         </div>
       )}
 
-      <div className="flex gap-3">
+      <div className="grid grid-cols-3 gap-4">
         <button
           onClick={handleExport}
           disabled={isExporting || repos.length === 0}
-          className="flex items-center gap-2 px-4 py-2 bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-900 rounded-lg hover:bg-zinc-700 dark:hover:bg-zinc-300 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          className="flex items-center justify-center gap-2 px-6 py-3 bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-900 font-medium transition-all disabled:opacity-40 disabled:cursor-not-allowed hover:bg-zinc-700 dark:hover:bg-zinc-300 cursor-pointer"
         >
           <Download className="w-4 h-4" />
           {isExporting ? '导出中...' : '导出数据'}
@@ -139,7 +137,7 @@ export function ImportExportPanel({
         <button
           onClick={() => fileInputRef.current?.click()}
           disabled={isImporting}
-          className="flex items-center gap-2 px-4 py-2 bg-zinc-200 dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 rounded-lg hover:bg-zinc-300 dark:hover:bg-zinc-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          className="flex items-center justify-center gap-2 px-6 py-3 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 font-medium border border-zinc-300 dark:border-zinc-700 transition-all disabled:opacity-40 disabled:cursor-not-allowed hover:bg-zinc-50 dark:hover:bg-zinc-700 cursor-pointer"
         >
           <Upload className="w-4 h-4" />
           {isImporting ? '导入中...' : '导入数据'}
@@ -147,7 +145,7 @@ export function ImportExportPanel({
 
         <button
           onClick={handleClear}
-          className="flex items-center gap-2 px-4 py-2 bg-red-100 dark:bg-red-900/20 text-red-900 dark:text-red-300 rounded-lg hover:bg-red-200 dark:hover:bg-red-900/30 transition-colors"
+          className="flex items-center justify-center gap-2 px-6 py-3 bg-zinc-100 dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 font-medium border border-zinc-300 dark:border-zinc-700 transition-all hover:bg-zinc-200 dark:hover:bg-zinc-800 cursor-pointer"
         >
           <Trash2 className="w-4 h-4" />
           清空数据
@@ -162,13 +160,24 @@ export function ImportExportPanel({
         />
       </div>
 
-      <div className="text-sm text-zinc-600 dark:text-zinc-400">
-        <p>导出的数据包含：</p>
-        <ul className="list-disc list-inside mt-1 space-y-1">
-          <li>所有仓库的元信息</li>
-          <li>自定义属性定义</li>
-          <li>每个仓库的自定义值</li>
-        </ul>
+      <div className="pt-4 border-t border-zinc-200 dark:border-zinc-800">
+        <h4 className="text-sm font-semibold text-zinc-900 dark:text-zinc-100 mb-3">
+          导出数据包含
+        </h4>
+        <div className="grid grid-cols-3 gap-3 text-sm text-zinc-600 dark:text-zinc-400">
+          <div className="flex items-start gap-2">
+            <div className="w-1.5 h-1.5 rounded-full bg-zinc-400 dark:bg-zinc-600 mt-1.5 flex-shrink-0" />
+            <span>仓库元信息</span>
+          </div>
+          <div className="flex items-start gap-2">
+            <div className="w-1.5 h-1.5 rounded-full bg-zinc-400 dark:bg-zinc-600 mt-1.5 flex-shrink-0" />
+            <span>自定义属性定义</span>
+          </div>
+          <div className="flex items-start gap-2">
+            <div className="w-1.5 h-1.5 rounded-full bg-zinc-400 dark:bg-zinc-600 mt-1.5 flex-shrink-0" />
+            <span>仓库自定义值</span>
+          </div>
+        </div>
       </div>
     </div>
   );
