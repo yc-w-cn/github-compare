@@ -20,7 +20,7 @@ export default function Home() {
         </h1>
         <HeaderActions />
       </header>
-      <div className="flex-1 w-full px-6 py-12 flex flex-col">
+      <div className="flex-1 w-full py-12 flex flex-col">
         <div className="w-full flex-1 flex items-center justify-center">
           {repos.length > 0 ? (
             <RepoTable data={repos} />
