@@ -7,7 +7,7 @@ import { RepoRow } from '@/components/RepoRow';
 import type { GitHubRepo } from '@/lib/github/types';
 
 export default function Home() {
-  const dataPath = join(process.cwd(), 'src', 'public', 'data', 'data.json');
+  const dataPath = join(process.cwd(), 'public', 'data', 'meta.json');
   const data = JSON.parse(readFileSync(dataPath, 'utf-8'));
 
   const repos: GitHubRepo[] = [];
@@ -15,14 +15,14 @@ export default function Home() {
   for (const repoKey of data.repos) {
     const [owner, repo] = repoKey.split('/');
     const filename = `${owner}-${repo}.json`;
-    const repoPath = join(process.cwd(), 'src', 'public', 'data', filename);
+    const repoPath = join(process.cwd(), 'public', 'data', filename);
     const repoData = JSON.parse(readFileSync(repoPath, 'utf-8'));
     repos.push(repoData);
   }
 
   return (
-    <div className="min-h-screen bg-white dark:bg-zinc-950">
-      <div className="max-w-[1400px] mx-auto px-6 py-12">
+    <div className="min-h-screen bg-white dark:bg-zinc-950 flex flex-col">
+      <div className="flex-1 max-w-[1400px] mx-auto px-6 py-12">
         <header className="mb-16">
           <h1 className="text-5xl font-bold text-zinc-900 dark:text-zinc-100 tracking-tight mb-4">
             GitHub 仓库对比
@@ -77,9 +77,9 @@ export default function Home() {
             </code>
           </div>
         )}
-
-        <Footer />
       </div>
+
+      <Footer />
 
       <CustomCompareManager repos={repos} rawRepos={repos} />
     </div>
