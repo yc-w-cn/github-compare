@@ -1,0 +1,10 @@
+{
+  "repos": [
+    "microsoft/graphrag",
+    "HKUDS/LightRAG",
+    "TuGraph-family/tugraph-db",
+    "circlemind-ai/fast-graphrag",
+    "qhjqhj00/MemoRAG"
+  ],
+  "lastUpdated": "2026-01-02T16:18:07.312Z"
+}
