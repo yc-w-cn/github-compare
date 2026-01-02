@@ -34,13 +34,8 @@ export function RepoRow({ repo }: RepoRowProps) {
       <td className="py-4 px-4 text-center text-zinc-900 dark:text-zinc-100">
         {repo.open_issues_count}
       </td>
-      <td className="py-4 px-4 text-center">
-        <span className="inline-flex items-center gap-1">
-          <span className="w-2 h-2 rounded-full bg-blue-500" />
-          <span className="text-zinc-900 dark:text-zinc-100">
-            {repo.language || '未知'}
-          </span>
-        </span>
+      <td className="py-4 px-4 text-center text-zinc-900 dark:text-zinc-100">
+        {repo.language || '未知'}
       </td>
       <td className="py-4 px-4 text-center text-zinc-600 dark:text-zinc-400 text-sm">
         {formatSize(repo.size)}
