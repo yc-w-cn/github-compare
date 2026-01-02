@@ -1,14 +1,19 @@
+import { useAtom } from 'jotai';
+
 import { RepoRow } from '@/components/RepoRow';
 import { TableHeader } from '@/components/TableHeader';
 import { useCustomProperties } from '@/hooks/use-custom-properties';
 import { useSortedRepos } from '@/hooks/use-sorted-repos';
 import { GitHubRepo } from '@/lib/github/types';
 
+import { editModeAtom } from '@/atoms';
+
 interface RepoTableProps {
   data: GitHubRepo[];
 }
 
 export function RepoTable({ data: repos }: RepoTableProps) {
+  const [editMode] = useAtom(editModeAtom);
   const { data: customData } = useCustomProperties(repos);
   const { sortedRepos } = useSortedRepos(repos);
 
@@ -41,6 +46,7 @@ export function RepoTable({ data: repos }: RepoTableProps) {
               repo={repo}
               customProperties={customProperties}
               customValues={customValuesMap[repo.full_name] || {}}
+              editMode={editMode}
             />
           ))}
         </tbody>
