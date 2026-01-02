@@ -1,5 +1,3 @@
-// 安装依赖: pnpm add dayjs
-
 declare global {
   namespace NodeJS {
     interface ProcessEnv {

@@ -1,5 +1,3 @@
-// 安装依赖: pnpm add dayjs
-
 import dayjs from 'dayjs';
 
 export function Footer() {
