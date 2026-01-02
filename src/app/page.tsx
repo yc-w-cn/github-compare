@@ -6,6 +6,7 @@ import { HeaderActions } from '@/components/HeaderActions';
 import { ImportExportManager } from '@/components/ImportExportManager';
 import { PropertyEditorManager } from '@/components/PropertyEditorManager';
 import { RepoTable } from '@/components/RepoTable';
+import { ValueEditorManager } from '@/components/ValueEditorManager';
 import { useRepos } from '@/hooks/use-github-repos';
 
 export default function Home() {
@@ -13,14 +14,13 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-white dark:bg-zinc-950 flex flex-col relative">
+      <header className="flex justify-between items-center border-b">
+        <h1 className="text-xl font-bold text-zinc-900 dark:text-zinc-100 tracking-tight px-6">
+          Github Compare
+        </h1>
+        <HeaderActions />
+      </header>
       <div className="flex-1 w-full px-6 py-12 flex flex-col">
-        <header className="mb-16 flex justify-between items-center">
-          <h1 className="text-2xl font-bold text-zinc-900 dark:text-zinc-100 tracking-tight">
-            Github Compare
-          </h1>
-          <HeaderActions />
-        </header>
-
         <div className="w-full flex-1 flex items-center justify-center">
           {repos.length > 0 ? (
             <RepoTable data={repos} />
@@ -36,6 +36,7 @@ export default function Home() {
 
       <PropertyEditorManager />
       <ImportExportManager />
+      <ValueEditorManager />
     </div>
   );
 }
