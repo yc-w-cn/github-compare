@@ -2,6 +2,7 @@
 
 import { useAtom, useSetAtom } from 'jotai';
 
+import { useQueryClient } from '@tanstack/react-query';
 import { X } from 'lucide-react';
 
 import type { CustomProperty } from '@/lib/custom-property/types';
@@ -20,10 +21,12 @@ export function ValueEditorManager() {
   const [repo] = useAtom(valueEditorRepoAtom);
   const [property] = useAtom(valueEditorPropertyAtom);
   const [value, setValue] = useAtom(valueEditorValueAtom);
+  const queryClient = useQueryClient();
 
   async function handleSave() {
     if (repo && property) {
       await setRepoValue(repo.full_name, property.id, value);
+      queryClient.invalidateQueries({ queryKey: ['custom-properties'] });
     }
     setIsOpen(false);
   }
@@ -52,26 +55,7 @@ export function ValueEditorManager() {
         </div>
 
         <div className="p-6">
-          <div className="mb-4">
-            <label className="block text-sm font-medium text-zinc-900 dark:text-zinc-100 mb-2">
-              仓库
-            </label>
-            <p className="text-zinc-600 dark:text-zinc-400">{repo.full_name}</p>
-          </div>
-
           <div className="mb-6">
-            <label className="block text-sm font-medium text-zinc-900 dark:text-zinc-100 mb-2">
-              属性
-            </label>
-            <p className="text-zinc-600 dark:text-zinc-400">
-              {property.displayName}
-            </p>
-          </div>
-
-          <div className="mb-6">
-            <label className="block text-sm font-medium text-zinc-900 dark:text-zinc-100 mb-2">
-              值
-            </label>
             <input
               type="text"
               value={value}
