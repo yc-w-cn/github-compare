@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 
+import { useQueryClient } from '@tanstack/react-query';
 import { GripVertical, Trash2 } from 'lucide-react';
 
 import {
@@ -31,6 +32,7 @@ export function PropertyEditor() {
     slug: '',
     type: 'text' as CustomPropertyType,
   });
+  const queryClient = useQueryClient();
 
   useEffect(() => {
     void loadProperties();
@@ -47,6 +49,7 @@ export function PropertyEditor() {
     setFormData({ displayName: '', slug: '', type: 'text' });
     setShowAddForm(false);
     await loadProperties();
+    queryClient.invalidateQueries({ queryKey: ['custom-properties'] });
   }
 
   async function handleUpdate(id: string) {
@@ -65,6 +68,7 @@ export function PropertyEditor() {
     if (confirm('确定要删除这个属性吗？')) {
       await deleteProperty(id);
       await loadProperties();
+      queryClient.invalidateQueries({ queryKey: ['custom-properties'] });
     }
   }
 
