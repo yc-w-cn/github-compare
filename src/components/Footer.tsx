@@ -7,7 +7,7 @@ export function Footer() {
   const formattedDate = buildDate ? dayjs(buildDate).format('YYYY-MM-DD') : '';
 
   return (
-    <footer className="mt-16 pt-8 border-t border-zinc-200 dark:border-zinc-800">
+    <footer className="mt-16 px-6 py-8 border-t border-zinc-200 dark:border-zinc-800">
       <div className="flex items-center justify-between text-sm text-zinc-500 dark:text-zinc-500">
         <p>版本: {version}</p>
         <p>编译日期: {formattedDate}</p>
