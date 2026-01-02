@@ -20,7 +20,7 @@ export function HeaderActions() {
   const [editMode, setEditMode] = useAtom(editModeAtom);
 
   return (
-    <div className="p-6 z-10 flex gap-1 items-center">
+    <div className="flex gap-1 items-center">
       <div className="flex items-center gap-2 px-2">
         <span className="text-sm text-zinc-600 dark:text-zinc-400">
           编辑模式
@@ -28,14 +28,14 @@ export function HeaderActions() {
         <Switch checked={editMode} onCheckedChange={setEditMode} />
       </div>
       <IconButton
-        icon={<Database className="w-6 h-6" />}
+        icon={<Database className="w-4 h-4" strokeWidth={2} />}
         title="导入导出"
         onClick={() => {
           setImportExportOpen(true);
         }}
       />
       <IconButton
-        icon={<Settings className="w-6 h-6" />}
+        icon={<Settings className="w-4 h-4" strokeWidth={2} />}
         title="属性管理"
         onClick={() => {
           setCustomCompareOpen(true);
@@ -45,7 +45,7 @@ export function HeaderActions() {
         href="https://github.com/yc-w-cn/github-compare"
         target="_blank"
         rel="noopener noreferrer"
-        icon={<GitHubIcon className="w-6 h-6" />}
+        icon={<GitHubIcon className="w-5 h-5" />}
         title="GitHub"
       />
     </div>
