@@ -1,13 +1,13 @@
-import { useMemo, useState } from 'react';
+import { useMemo } from 'react';
+import { useAtomValue } from 'jotai';
 
 import type { GitHubRepo } from '@/lib/github/types';
 
-type SortField = 'stars' | 'forks' | 'issues' | 'updated_at' | 'size';
-type SortOrder = 'asc' | 'desc';
+import { sortFieldAtom, sortOrderAtom } from '@/atoms';
 
 export function useSortedRepos(repos: GitHubRepo[]) {
-  const [sortField, setSortField] = useState<SortField>('stars');
-  const [sortOrder, setSortOrder] = useState<SortOrder>('desc');
+  const sortField = useAtomValue(sortFieldAtom);
+  const sortOrder = useAtomValue(sortOrderAtom);
 
   const sortedRepos = useMemo(() => {
     const sorted = [...repos];
@@ -36,25 +36,7 @@ export function useSortedRepos(repos: GitHubRepo[]) {
     return sorted;
   }, [repos, sortField, sortOrder]);
 
-  const handleSort = (field: SortField) => {
-    if (sortField === field) {
-      setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
-    } else {
-      setSortField(field);
-      setSortOrder('desc');
-    }
-  };
-
-  const renderSortIcon = (field: SortField) => {
-    if (sortField !== field) return null;
-    return sortOrder === 'asc' ? ' ↑' : ' ↓';
-  };
-
   return {
     sortedRepos,
-    sortField,
-    sortOrder,
-    handleSort,
-    renderSortIcon,
   };
 }
