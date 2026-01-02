@@ -1,12 +1,16 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
+
 import { ExternalLink, FileText } from 'lucide-react';
-import type { CustomProperty, RepoDisplayData } from '@/types';
-import { getProperties, getRepoValue, setRepoValue } from '@/lib/custom-compare';
+
+import { getProperties } from '@/lib/custom-property';
+import { CustomProperty } from '@/lib/custom-property/types';
+import { GitHubRepo } from '@/lib/github';
+import { getRepoValue, setRepoValue } from '@/lib/repo-value';
 
 interface ValueEditorProps {
-  repo: RepoDisplayData;
+  repo: GitHubRepo;
 }
 
 export function ValueEditor({ repo }: ValueEditorProps) {
@@ -15,15 +19,16 @@ export function ValueEditor({ repo }: ValueEditorProps) {
   const [editing, setEditing] = useState<Record<string, boolean>>({});
 
   useEffect(() => {
-    loadProperties();
-  }, [repo.fullName]);
+    void loadProperties();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [repo.full_name]);
 
   async function loadProperties() {
     const props = await getProperties();
     setProperties(props);
     const valueMap: Record<string, string> = {};
     for (const prop of props) {
-      const value = await getRepoValue(repo.fullName, prop.id);
+      const value = await getRepoValue(repo.full_name, prop.id);
       if (value) {
         valueMap[prop.id] = value;
       }
@@ -32,7 +37,7 @@ export function ValueEditor({ repo }: ValueEditorProps) {
   }
 
   async function handleSave(propertyId: string) {
-    await setRepoValue(repo.fullName, propertyId, values[propertyId] || '');
+    await setRepoValue(repo.full_name, propertyId, values[propertyId] || '');
     setEditing({ ...editing, [propertyId]: false });
   }
 
@@ -54,7 +59,7 @@ export function ValueEditor({ repo }: ValueEditorProps) {
     }
 
     if (property.type === 'arxiv') {
-      const arxivId = value.match(/arxiv\.org\/abs\/(\d+\.\d+)/)?.[1] || value;
+      const arxivId = /arxiv\.org\/abs\/(\d+\.\d+)/.exec(value)?.[1] || value;
       return (
         <a
           href={`https://arxiv.org/abs/${arxivId}`}
@@ -87,9 +92,9 @@ export function ValueEditor({ repo }: ValueEditorProps) {
                 <input
                   type="text"
                   value={values[property.id] || ''}
-                  onChange={(e) =>
-                    setValues({ ...values, [property.id]: e.target.value })
-                  }
+                  onChange={(e) => {
+                    setValues({ ...values, [property.id]: e.target.value });
+                  }}
                   placeholder={
                     property.type === 'link'
                       ? 'https://...'
@@ -106,21 +111,25 @@ export function ValueEditor({ repo }: ValueEditorProps) {
                   保存
                 </button>
                 <button
-                  onClick={() =>
-                    setEditing({ ...editing, [property.id]: false })
-                  }
+                  onClick={() => {
+                    setEditing({ ...editing, [property.id]: false });
+                  }}
                   className="px-3 py-1 bg-zinc-200 dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 rounded text-sm hover:bg-zinc-300 dark:hover:bg-zinc-700"
                 >
                   取消
                 </button>
               </div>
             ) : (
-              <div className="text-sm">{renderValue(property, values[property.id] || '')}</div>
+              <div className="text-sm">
+                {renderValue(property, values[property.id] || '')}
+              </div>
             )}
           </div>
           {!editing[property.id] && (
             <button
-              onClick={() => setEditing({ ...editing, [property.id]: true })}
+              onClick={() => {
+                setEditing({ ...editing, [property.id]: true });
+              }}
               className="px-3 py-1 text-sm text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded transition-colors"
             >
               编辑
