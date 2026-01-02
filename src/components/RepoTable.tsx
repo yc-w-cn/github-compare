@@ -21,10 +21,10 @@ export function RepoTable({ data: repos }: RepoTableProps) {
   const customValuesMap = customData?.valuesMap || {};
 
   return (
-    <div className="overflow-x-auto">
-      <table className="w-full border-collapse">
+    <div className="w-full overflow-x-auto">
+      <table className="w-full min-w-full border-collapse">
         <thead>
-          <tr className="border-b-2 border-zinc-900 dark:border-zinc-100">
+          <tr className="border-b-2 border-zinc-900 dark:border-zinc-100 whitespace-nowrap">
             <TableHeader>仓库</TableHeader>
             <TableHeader field="stars">Stars</TableHeader>
             <TableHeader field="forks">Forks</TableHeader>
