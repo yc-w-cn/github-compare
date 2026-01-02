@@ -13,7 +13,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-white dark:bg-zinc-950 flex flex-col relative">
-      <div className="flex-1 w-full max-w-4xl mx-auto px-6 py-12 flex flex-col">
+      <div className="flex-1 w-full px-6 py-12 flex flex-col">
         <header className="mb-16 flex justify-between items-center">
           <h1 className="text-2xl font-bold text-zinc-900 dark:text-zinc-100 tracking-tight">
             Github Compare
@@ -22,7 +22,13 @@ export default function Home() {
         </header>
 
         <div className="w-full flex-1 flex items-center justify-center">
-          {repos.length > 0 ? <RepoTable data={repos} /> : <EmptyState />}
+          {repos.length > 0 ? (
+            <RepoTable data={repos} />
+          ) : (
+            <div className="w-full max-w-4xl mx-auto">
+              <EmptyState />
+            </div>
+          )}
         </div>
       </div>
 
