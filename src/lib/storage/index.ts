@@ -1,4 +1,4 @@
-import localforage from 'localforage';
+import * as localforage from 'localforage';
 
 import { CustomPropertyData } from '../custom-property/types';
 
