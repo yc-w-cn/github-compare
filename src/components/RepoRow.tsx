@@ -1,22 +1,109 @@
+'use client';
+
+import { useState } from 'react';
+
 import { ExternalLink, FileText } from 'lucide-react';
 
 import type { CustomProperty } from '@/lib/custom-property/types';
 import type { GitHubRepo } from '@/lib/github';
+import { getRepoValue, setRepoValue } from '@/lib/repo-value';
 import { formatDate, formatNumber, formatSize } from '@/lib/utils';
 
 interface RepoRowProps {
   repo: GitHubRepo;
   customProperties: CustomProperty[];
   customValues: Record<string, string>;
+  editMode: boolean;
 }
 
 export function RepoRow({
   repo,
   customProperties,
   customValues,
+  editMode,
 }: RepoRowProps) {
+  const [editing, setEditing] = useState<Record<string, boolean>>({});
+  const [tempValues, setTempValues] = useState<Record<string, string>>({});
+
+  async function handleSave(propertyId: string) {
+    await setRepoValue(
+      repo.full_name,
+      propertyId,
+      tempValues[propertyId] || '',
+    );
+    setEditing({ ...editing, [propertyId]: false });
+    setTempValues({ ...tempValues, [propertyId]: '' });
+  }
+
+  function handleStartEdit(propertyId: string) {
+    setEditing({ ...editing, [propertyId]: true });
+    setTempValues({
+      ...tempValues,
+      [propertyId]: customValues[propertyId] || '',
+    });
+  }
+
+  function handleCancelEdit(propertyId: string) {
+    setEditing({ ...editing, [propertyId]: false });
+    setTempValues({ ...tempValues, [propertyId]: '' });
+  }
+
   function renderCustomValue(property: CustomProperty, value: string) {
-    if (!value) return <span className="text-zinc-400">-</span>;
+    const hasValue = !!value;
+    const isEditing = editing[property.id];
+
+    if (isEditing) {
+      return (
+        <div className="flex flex-col gap-1 items-center">
+          <input
+            type="text"
+            value={tempValues[property.id] || ''}
+            onChange={(e) => {
+              setTempValues({ ...tempValues, [property.id]: e.target.value });
+            }}
+            placeholder={
+              property.type === 'link'
+                ? 'https://...'
+                : property.type === 'arxiv'
+                  ? 'https://arxiv.org/abs/...'
+                  : '输入值'
+            }
+            className="w-full px-2 py-1 border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 text-sm"
+          />
+          <div className="flex gap-1">
+            <button
+              onClick={() => handleSave(property.id)}
+              className="px-2 py-0.5 bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-900 text-xs font-medium transition-all hover:bg-zinc-700 dark:hover:bg-zinc-300 cursor-pointer"
+            >
+              保存
+            </button>
+            <button
+              onClick={() => {
+                handleCancelEdit(property.id);
+              }}
+              className="px-2 py-0.5 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 text-xs font-medium border border-zinc-300 dark:border-zinc-700 transition-all hover:bg-zinc-50 dark:hover:bg-zinc-700 cursor-pointer"
+            >
+              取消
+            </button>
+          </div>
+        </div>
+      );
+    }
+
+    if (!hasValue && editMode) {
+      return (
+        <button
+          onClick={() => {
+            handleStartEdit(property.id);
+          }}
+          className="px-3 py-1 text-xs text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-colors cursor-pointer border border-blue-300 dark:border-blue-700 rounded"
+        >
+          编辑
+        </button>
+      );
+    }
+
+    if (!hasValue) return <span className="text-zinc-400">-</span>;
 
     if (property.type === 'link') {
       return (
