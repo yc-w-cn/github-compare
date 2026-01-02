@@ -1,8 +1,12 @@
 {
   "name": "@yc-w-cn/github-compare",
+  "description": "简洁高效的 GitHub 仓库对比工具，帮助你快速了解和比较不同仓库的关键指标。",
   "version": "1.0.0",
-  "private": true,
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yc-w-cn/github-compare.git"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -16,10 +20,14 @@
     "deploy": "gh-pages -d out"
   },
   "dependencies": {
+    "@radix-ui/react-select": "^2.2.6",
+    "@radix-ui/react-switch": "^1.2.6",
+    "@tanstack/react-query": "^5.90.16",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "dayjs": "^1.11.19",
     "dotenv": "^17.2.3",
+    "jotai": "^2.16.1",
     "localforage": "^1.10.0",
     "lucide-react": "^0.562.0",
     "next": "16.1.1",
