@@ -2,8 +2,15 @@
 
 import { useEffect, useState } from 'react';
 
-import { GripVertical, Plus, Trash2 } from 'lucide-react';
+import { GripVertical, Trash2 } from 'lucide-react';
 
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import {
   addProperty,
   deleteProperty,
@@ -71,81 +78,80 @@ export function PropertyEditor() {
   }
 
   return (
-    <div className="space-y-4">
-      <div className="flex items-center justify-between">
-        <h3 className="text-lg font-semibold text-zinc-900 dark:text-zinc-100">
-          自定义属性
-        </h3>
-        <button
-          onClick={() => {
-            setShowAddForm(true);
-          }}
-          className="flex items-center gap-2 px-4 py-2 bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-900 rounded-lg hover:bg-zinc-700 dark:hover:bg-zinc-300 transition-colors"
-        >
-          <Plus className="w-4 h-4" />
-          添加属性
-        </button>
-      </div>
-
-      {showAddForm && (
-        <div className="p-4 bg-zinc-50 dark:bg-zinc-900 rounded-lg space-y-3">
-          <input
-            type="text"
-            placeholder="显示名称"
-            value={formData.displayName}
-            onChange={(e) => {
-              setFormData({ ...formData, displayName: e.target.value });
-            }}
-            className="w-full px-3 py-2 border border-zinc-300 dark:border-zinc-700 rounded-lg bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100"
-          />
-          <input
-            type="text"
-            placeholder="Slug"
-            value={formData.slug}
-            onChange={(e) => {
-              setFormData({ ...formData, slug: e.target.value });
-            }}
-            className="w-full px-3 py-2 border border-zinc-300 dark:border-zinc-700 rounded-lg bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100"
-          />
-          <select
-            value={formData.type}
-            onChange={(e) => {
-              setFormData({
-                ...formData,
-                type: e.target.value as CustomPropertyType,
-              });
-            }}
-            className="w-full px-3 py-2 border border-zinc-300 dark:border-zinc-700 rounded-lg bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100"
-          >
-            <option value="text">纯文本</option>
-            <option value="link">链接</option>
-            <option value="arxiv">ArXiv 论文</option>
-          </select>
-          <div className="flex gap-2">
+    <div className="space-y-6">
+      <div className="p-4 bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 items-end">
+          <div>
+            <label className="block text-sm font-medium text-zinc-900 dark:text-zinc-100 mb-2">
+              显示名称
+            </label>
+            <input
+              type="text"
+              placeholder="输入名称"
+              value={formData.displayName}
+              onChange={(e) => {
+                setFormData({ ...formData, displayName: e.target.value });
+              }}
+              className="w-full px-3 py-2 border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-zinc-900 dark:text-zinc-100 mb-2">
+              英文名称
+            </label>
+            <input
+              type="text"
+              placeholder="输入英文标识"
+              value={formData.slug}
+              onChange={(e) => {
+                setFormData({ ...formData, slug: e.target.value });
+              }}
+              className="w-full px-3 py-2 border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-zinc-900 dark:text-zinc-100 mb-2">
+              属性类型
+            </label>
+            <Select
+              value={formData.type}
+              onValueChange={(value) => {
+                setFormData({ ...formData, type: value as CustomPropertyType });
+              }}
+            >
+              <SelectTrigger className="w-full border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 h-10.5!">
+                <SelectValue placeholder="选择类型" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="text" className="h-10 cursor-pointer">
+                  纯文本
+                </SelectItem>
+                <SelectItem value="link" className="h-10 cursor-pointer">
+                  链接
+                </SelectItem>
+                <SelectItem value="arxiv" className="h-10 cursor-pointer">
+                  ArXiv
+                </SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+          <div>
             <button
               onClick={handleAdd}
-              className="px-4 py-2 bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-900 rounded-lg hover:bg-zinc-700 dark:hover:bg-zinc-300 transition-colors"
+              disabled={!formData.displayName || !formData.slug}
+              className="w-full px-6 py-2 bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-900 font-medium transition-all hover:bg-zinc-700 dark:hover:bg-zinc-300 disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
             >
               添加
             </button>
-            <button
-              onClick={() => {
-                setShowAddForm(false);
-                setFormData({ displayName: '', slug: '', type: 'text' });
-              }}
-              className="px-4 py-2 bg-zinc-200 dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 rounded-lg hover:bg-zinc-300 dark:hover:bg-zinc-700 transition-colors"
-            >
-              取消
-            </button>
           </div>
         </div>
-      )}
+      </div>
 
       <div className="space-y-2">
         {properties.map((property) => (
           <div
             key={property.id}
-            className="flex items-center gap-3 p-3 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-lg"
+            className="flex items-center gap-3 p-4 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800"
           >
             <GripVertical className="w-4 h-4 text-zinc-400 cursor-move" />
             {editingId === property.id ? (
@@ -156,7 +162,7 @@ export function PropertyEditor() {
                   onChange={(e) => {
                     setFormData({ ...formData, displayName: e.target.value });
                   }}
-                  className="flex-1 px-2 py-1 border border-zinc-300 dark:border-zinc-700 rounded bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 text-sm"
+                  className="flex-1 px-2 py-1 border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 text-sm"
                 />
                 <input
                   type="text"
@@ -164,25 +170,29 @@ export function PropertyEditor() {
                   onChange={(e) => {
                     setFormData({ ...formData, slug: e.target.value });
                   }}
-                  className="flex-1 px-2 py-1 border border-zinc-300 dark:border-zinc-700 rounded bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 text-sm"
+                  className="flex-1 px-2 py-1 border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 text-sm"
                 />
-                <select
+                <Select
                   value={formData.type}
-                  onChange={(e) => {
+                  onValueChange={(value) => {
                     setFormData({
                       ...formData,
-                      type: e.target.value as CustomPropertyType,
+                      type: value as CustomPropertyType,
                     });
                   }}
-                  className="px-2 py-1 border border-zinc-300 dark:border-zinc-700 rounded bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 text-sm"
                 >
-                  <option value="text">文本</option>
-                  <option value="link">链接</option>
-                  <option value="arxiv">论文</option>
-                </select>
+                  <SelectTrigger className="w-32 border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100">
+                    <SelectValue placeholder="类型" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="text">文本</SelectItem>
+                    <SelectItem value="link">链接</SelectItem>
+                    <SelectItem value="arxiv">论文</SelectItem>
+                  </SelectContent>
+                </Select>
                 <button
                   onClick={() => handleUpdate(property.id)}
-                  className="px-3 py-1 bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-900 rounded text-sm hover:bg-zinc-700 dark:hover:bg-zinc-300"
+                  className="px-4 py-1 bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-900 text-sm font-medium transition-all hover:bg-zinc-700 dark:hover:bg-zinc-300 cursor-pointer"
                 >
                   保存
                 </button>
@@ -191,7 +201,7 @@ export function PropertyEditor() {
                     setEditingId(null);
                     setFormData({ displayName: '', slug: '', type: 'text' });
                   }}
-                  className="px-3 py-1 bg-zinc-200 dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 rounded text-sm hover:bg-zinc-300 dark:hover:bg-zinc-700"
+                  className="px-4 py-1 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 text-sm font-medium border border-zinc-300 dark:border-zinc-700 transition-all hover:bg-zinc-50 dark:hover:bg-zinc-700 cursor-pointer"
                 >
                   取消
                 </button>
@@ -210,13 +220,13 @@ export function PropertyEditor() {
                   onClick={() => {
                     handleEdit(property);
                   }}
-                  className="p-2 text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded transition-colors"
+                  className="p-2 text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors cursor-pointer"
                 >
                   编辑
                 </button>
                 <button
                   onClick={() => handleDelete(property.id)}
-                  className="p-2 text-red-600 dark:text-red-400 hover:text-red-900 dark:hover:text-red-300 hover:bg-red-50 dark:hover:bg-red-900/20 rounded transition-colors"
+                  className="p-2 text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors cursor-pointer"
                 >
                   <Trash2 className="w-4 h-4" />
                 </button>
