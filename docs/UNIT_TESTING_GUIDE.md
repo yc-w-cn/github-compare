@@ -185,29 +185,6 @@ describe('formatNumber', () => {
 - 无效输入
 - 特殊字符和格式
 
-## 针对 src/lib 的测试策略
-
-### formatters.ts 测试
-
-该文件包含纯函数，测试重点：
-- `formatNumber`: 测试不同数值范围（百万、千、小数字）的格式化
-- `formatDate`: 测试日期字符串格式化
-- `formatSize`: 测试文件大小格式化（MB、KB）
-- `toDisplayData`: 测试 GitHubRepo 到 RepoDisplayData 的转换，包括 null 值处理
-
-### utils.ts 测试
-
-该文件包含类名合并工具函数：
-- `cn`: 测试类名合并、条件类名、对象形式、数组形式、Tailwind 冲突处理
-
-### custom-compare.ts 测试
-
-该文件包含异步函数和 localforage 依赖，需要 Mock：
-- 所有函数都需要 Mock localforage
-- 使用 beforeEach 和 afterEach 进行测试隔离
-- 测试每个函数的正常流程和边界条件
-- 涵盖 11 个导出函数的完整测试
-
 ## Mock 和异步测试
 
 ### Mock 策略
